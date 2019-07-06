@@ -1,0 +1,61 @@
+
+Sub RunTickerName_Vol_Easy()
+
+'Variable to hold the three tabs in the workbook
+Dim ws As Worksheet
+
+Application.ScreenUpdating = False
+
+'Run
+For Each ws In Worksheets
+    ws.Select
+    Call TickerName_Vol_Easy
+    
+Next
+Application.ScreenUpdating = True
+
+End Sub
+
+Sub TickerName_Vol_Easy()
+
+    ' Set Dimensions
+    Dim total As Double
+    
+    ' Set title row
+    Range("I1").Value = "Ticker"
+    Range("J1").Value = "Total Stock Volume"
+
+
+    ' get the row number of the last row with data
+    RowCount = Cells(Rows.Count, "A").End(xlUp).Row
+
+    
+    For i = 2 To RowCount
+
+        ' If ticker changes then print results
+        If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+            ' Storing results in Total
+            total = total + Cells(i, 7).Value
+
+            ' Print Ticker Symbol
+            Range("I" & 2 + j).Value = Cells(i, 1).Value
+
+            ' Print Total
+            Range("J" & 2 + j).Value = total
+
+            ' Reset Total
+            total = 0
+
+            ' Move to next row
+            j = j + 1
+
+        'Keep adding to the Total Volume
+        Else
+            total = total + Cells(i, 7).Value
+
+        End If
+
+    Next i
+
+End Sub
